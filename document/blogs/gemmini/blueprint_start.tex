@@ -1,0 +1,57 @@
+\documentclass[a4paper,11pt,onecolumn,oneside]{article}
+% for url
+\usepackage{hyperref}
+
+%for draw chart
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows,fit}
+\usetikzlibrary{backgrounds}
+
+%for code
+\usepackage{listings}
+
+\lstloadlanguages{
+         Java
+          }
+          %for chinese indent
+\usepackage{indentfirst}
+\usepackage{enumerate}
+\usepackage{verbatim} 
+
+% 设定中文环境
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont={SimHei}]{SimSun}
+\setCJKsansfont{SimSun}
+\setCJKmonofont{SimHei}
+
+\title{Blueprint使用手记}
+\author{Jet Geng}
+\date{\today}
+\begin{document}
+\maketitle
+\section{概述}
+Blueprint是OSGi Service Platform Enterprise Specification 标准的一部分。很多最佳实践中也都推荐在应用程序中使用他。最近在项目中用他来发布和应用服务。感觉效果不错。所以就有了这篇使用手记！欢迎各位看官拍砖！
+\section{配置环境}
+我们在前期找到了两个Blueprint的实现：一个是Apache 的aries，另外一个就是Eclipse的Gemini。最后选择了Gemini。做出这样的决定出于两点考虑：
+\begin{itemize}
+    \item Blueprint的标准就是由Spring提出。
+    \item Gemini的初始代码由Srping所捐献。
+\end{itemize}
+下面我就简单介绍一下环境的配置过程：
+\begin{itemize}
+    \item 从\url{http://eclipse.org/gemini/} 下载Gemini的合适的版本。我们采用的是1.0.0M1。并解压到路径 \emph{A}
+    \item 从\url{http://static.springsource.org/downloads/nightly/milestone-download.php}下载spring-osgi-2.0.0.M1-with-dependencies。 并解压到路径\emph{B}。他里面包括了Gemini所依赖的bundle。说白了也就是SpringFramework。
+    \item Eclipse中新建一个Target Platform。把上述的路径\emph{A}和\emph{B} 加入到新建的Target Platform中去。
+    \item 选择新建的Target Platform为当前活动的Platform。
+\end{itemize}
+\section{启航}
+\paragraph{个人理解Gemini就是OSGi世界中的IOC。既然是一个IOC框架，那我们就从创建一个Bean开始吧！}
+\subsection{创建一个Bean}
+
+\section{常见问题}
+\subsection{打包}
+\subsection{服务相关}
+\section{需要提高点}
+
+\end{document}
+
