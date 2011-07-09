@@ -9,6 +9,7 @@
 
 %for code
 \usepackage{listings}
+\usepackage{xcolor}
 
 \lstloadlanguages{
          Java
@@ -23,6 +24,47 @@
 \setCJKmainfont[BoldFont={SimHei}]{SimSun}
 \setCJKsansfont{SimSun}
 \setCJKmonofont{SimHei}
+
+\tikzstyle{abstractbox} = [draw=black, fill=white, rectangle, 
+  inner sep=10pt, style=rounded corners, drop shadow={fill=black,
+  opacity=1}]
+\tikzstyle{abstracttitle} =[fill=white]
+
+\newcommand{\boxabstract}[2][fill=white]{
+    \begin{center}
+      \begin{tikzpicture}
+        \node [abstractbox, #1] (box)
+        {\begin{minipage}{0.80\linewidth}
+%            \setlength{\parindent}{2mm}
+            \footnotesize #2
+          \end{minipage}};
+%        \node[abstracttitle, right=10pt] at (box.north west) {Abstract};
+      \end{tikzpicture}
+    \end{center}
+  }
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+  
 
 \title{Blueprint使用手记}
 \author{Jet Geng}
@@ -47,7 +89,52 @@ Blueprint是OSGi Service Platform Enterprise Specification 标准的一部分。
 \section{启航}
 \paragraph{个人理解Gemini就是OSGi世界中的IOC。既然是一个IOC框架，那我们就从创建一个Bean开始吧！}
 \subsection{创建一个Bean}
+首先我们来看一下我们要存入Container中的POJO。
+\begin{lstlisting}[keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50} ,language=Java]
+package org.gunn.gemini.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+/**
+ * This pojo will create by blueprint container
+ * @author Jet Geng 
+ *
+ */
+public class POJOWillInContainer {
+    private Logger logger = 
+            LoggerFactory.getLogger(POJOWillInContainer.class);
+    
+    private String name ;
+    
+    private String age;
+
+    public void setName(String name) {
+        logger.info("the new name is:" + name);
+        this.name = name;
+    }
+
+    public void setAge(String age) {
+        logger.info("the new age value is:" + age);
+        this.age = age;
+    }
+}
+    
+\end{lstlisting}
+这个超级简单的一个POJO，我们如何通过Gemini来创建他呢？我们通过一个简单的配置文件。具体如下。
+\begin{lstlisting}[language=Xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+	<bean id="myPOJO" class="org.gunn.gemini.demo.POJOWillInContainer" >
+		<property name="name" value="JetGeng"/>
+		<property name="age" value="32"/>
+	</bean>
+</blueprint>
+    
+\end{lstlisting}
+用过spring的兄弟，第一眼就能看明白这个配置文件说的是什么。他就在
+\boxabstract{
+这是一个提醒
+}
 \section{常见问题}
 \subsection{打包}
 \subsection{服务相关}
