@@ -1,0 +1,107 @@
+
+\documentclass[a4paper,11pt,onecolumn,oneside]{article}
+% for url
+\usepackage{hyperref}
+
+%for draw chart
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows,fit}
+\usetikzlibrary{backgrounds}
+
+%for code
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstloadlanguages{
+         Java
+          }
+          %for chinese indent
+\usepackage{indentfirst}
+\usepackage{enumerate}
+\usepackage{verbatim} 
+
+% 设定中文环境
+\usepackage{xeCJK}
+\setCJKmainfont[BoldFont={SimHei}]{SimSun}
+\setCJKsansfont{SimSun}
+\setCJKmonofont{SimHei}
+
+\tikzstyle{abstractbox} = [draw=black, fill=white, rectangle, 
+  inner sep=10pt, style=rounded corners, drop shadow={fill=black,
+  opacity=1}]
+\tikzstyle{abstracttitle} =[fill=white]
+
+\newcommand{\boxabstract}[2][fill=white]{
+    \begin{center}
+      \begin{tikzpicture}
+        \node [abstractbox, #1] (box)
+        {\begin{minipage}{0.80\linewidth}
+%            \setlength{\parindent}{2mm}
+            \footnotesize #2
+          \end{minipage}};
+        \node[abstracttitle, right=10pt] at (box.north west) {提示};
+      \end{tikzpicture}
+    \end{center}
+  }
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\title{iTop的技术特点说明}
+\author{耿宜超}
+\date{\today}
+\begin{document}
+\maketitle
+\section{概述}
+基于技术服务于业务这一准则，我们依据铁路业务特点在当前业界广泛认可的技术中选定了一整套的技术方案来构建我们的iTop产品。具体的如下：
+\begin{itemize}
+    \item 让产品运行于主流操作系统的跨平台技术－－Java。
+    \item 让产品可以无限扩展，动态升级更新的模块化技术 -- OSGi。
+    \item 让产品拥有友好，绚丽的操作界面 －－ Flex。
+\end{itemize}
+\section{跨平台的Java}
+对于希望部署到多平台的大型应用，Java平台可以说是很合适的。主要原因如下：
+\begin{itemize}
+    \item Java天生的跨平台性，强大的网络特性，以及内建的多线程支持。都为构建iTop这样的程序提供了很好的基础。
+    \item Java的开发性。Java世界向来以开放而闻名。我们可以很容易的获得从Java虚拟机到类库再到三方库的全部代码。这样可以大大提高系统的安全性和开发人员可控制程度。
+    \item 活跃的Java社区和随处可取的技术支持。这为开发人员提供极大的帮助和信心。并用这些信心为客户构建让用户放心的系统。
+\end{itemize}
+\section{无限扩展的心}
+业务是产品的核心！业务是变化的，所以要求产品必须要有一个无限扩展的（核）心。这里我们选中了Eclipse基金会的Equniox。\\
+Equniox是一个OSGi R4标准的一个实现，同时他也是使用最广泛的一个实现。选用他的主要原因是：
+\begin{itemize}
+    \item 强制的模块化，强制要求开发人员从模块化的角度思考问题。减小程序的粒度。可以为后续添加模块提供服务，减轻后续开发的工作量
+    \item 动态发布。在运行期间可以在停止系统的情况下安装，卸载、启动和停止系统中的不同模块。
+    \item 提供内建的SOA机制。可以让各个模块化之间进行松耦合，方便重新组成新的模块。
+    \item 社区活跃，同时还有很多大公司如IBM,Oracle,SAP等。
+\end{itemize}
+\section{绚丽的RIA表现}
+对于展现端我们采用Flex技术。选用他的主要原因是:
+\begin{itemize}
+    \item Flex可以跨浏览器。
+    \item Flex表现力丰富。界面友好。
+    \item 与Java结合后相当强大，能充分利用Java的资源背景。
+    \item 拥有丰富的组件和第三方组件，对企业级的数据汇总和业务流程展现力较强悍.
+    \item 项目和组件的重用性高，易于资源积累和快速构建.
+\end{itemize}
+\end{document}
+
