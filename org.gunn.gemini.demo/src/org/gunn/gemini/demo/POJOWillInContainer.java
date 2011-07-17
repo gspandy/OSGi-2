@@ -31,6 +31,11 @@ public class POJOWillInContainer {
         logger.info("the new age value is:" + age);
         this.age = age;
     }
+
+	public String toString() {
+		return "POJOWillInContainer [logger=" + logger + ", name=" + name
+				+ ", age=" + age + "]";
+	}
     
     
 }
