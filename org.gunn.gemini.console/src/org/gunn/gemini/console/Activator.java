@@ -1,22 +1,24 @@
 package org.gunn.gemini.console;
 
+import java.util.Map;
+
+import org.eclipse.osgi.framework.console.CommandProvider;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class Activator implements BundleActivator {
+import com.zthz.itop.daserver.test.common.BeanTestEngine;
 
-	private static BundleContext context;
+public class Activator extends AbstractBlueprintActivator  implements CommandProvider{
 
-	static BundleContext getContext() {
-		return context;
-	}
-
+	private BeanTestEngine engine;
+	private Map<String , Object> scriptParam;
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
+		super.start(bundleContext);
 	}
 
 	/*
@@ -24,7 +26,15 @@ public class Activator implements BundleActivator {
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+		super.stop(bundleContext);
 	}
+
+	@Override
+	public String getHelp() {
+		String helptips = Messages.Activator_Help;
+		return helptips;
+	}
+	
+	
 
 }
