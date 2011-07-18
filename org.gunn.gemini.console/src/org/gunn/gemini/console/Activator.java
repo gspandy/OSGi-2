@@ -1,5 +1,9 @@
 package org.gunn.gemini.console;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,16 +14,19 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import com.zthz.itop.daserver.test.common.BeanTestEngine;
+import com.zthz.itop.daserver.test.common.ParamParaserResult;
+import com.zthz.itop.daserver.test.common.TestCommandParamHandle;
 
 public class Activator extends AbstractBlueprintActivator  implements CommandProvider{
 
 	private BeanTestEngine engine;
 	private Map<String , Object> scriptParam;
-	
+	private TestCommandParamHandle paramHandle;
 	
 	public Activator(){
 		scriptParam = new HashMap<String, Object>();
 		scriptParam.put("act", this);
+		paramHandle = new TestCommandParamHandle();
 	}
 	
 	
@@ -57,14 +64,29 @@ public class Activator extends AbstractBlueprintActivator  implements CommandPro
 	 * @return
 	 */
 	public Object _invokeGV( CommandInterpreter interpreter){
-		StringBuffer code = new StringBuffer();
-		String temp = interpreter.nextArgument();
-		while( StringUtils.isNotBlank( temp ) ){
-			code.append(temp).append(" ");
-			temp = interpreter.nextArgument();
+		ParamParaserResult result = paramHandle.paraseParam(interpreter);
+		
+		switch(result.commandType()){
+			case ScriptCode :
+					engine.run(getCommandCode(result.getScriptCode()), "adapter", getParam());
+				break;
+			case FileCode :
+				URL url;
+				try {
+					url = new URL(result.getScriptFileUrl());
+					File scriptFile = new File(url.toURI());
+					engine.run( scriptFile ,"adapter", getParam() );
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+				break;
 		}
 		
-		System.out.println( engine.run(getCommandCode(code.toString()), "adapter", getParam()) );
 		return null;
 	}
 	

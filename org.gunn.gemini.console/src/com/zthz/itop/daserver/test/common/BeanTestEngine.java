@@ -2,9 +2,12 @@ package com.zthz.itop.daserver.test.common;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.Map;
 
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.Invocable;
 import javax.script.ScriptException;
@@ -39,8 +42,30 @@ public class BeanTestEngine {
 		return null;
 	}
 	
+	private void initPara(Bindings bind ,  Map<String,Object> para ){
+		for(String key : para.keySet()){
+			bind.put(key, para.get(key));
+		}
+	}
 	
-	public Object run(File sourceFile){
+	public Object run(File sourceFile ,String functionName , Map<String,Object> para ){
+		try {
+			FileReader reader = new FileReader(sourceFile);
+			if( engine != null ){
+				Bindings bindings = engine.createBindings();
+				initPara(bindings , para);
+				engine.eval(reader, bindings);
+				return ((Invocable)engine).invokeFunction(functionName, null);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (ScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	

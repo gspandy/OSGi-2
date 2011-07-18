@@ -1,5 +1,8 @@
 package com.zthz.itop.daserver.test.common;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.osgi.framework.console.CommandInterpreter;
+
 /**
  * 用户处理调用Groovy引擎的接口。<p>
  * 命令的模式为
@@ -11,10 +14,37 @@ package com.zthz.itop.daserver.test.common;
  *
  */
 public class TestCommandParamHandle {
+	
+	public final static String  fileUrlPattern = "file:\\/{2}(\\/[:\\w\\.]+)+";
+	//private ParamParaserResult paramResult  ;
 	public enum CommandType{
 		ScriptCode,
 		UrlCode,
 		FileCode;
+	}
+	
+	/**
+	 * 用于处理输入参数
+	 * @param interpreter
+	 * @return
+	 */
+	public ParamParaserResult paraseParam(CommandInterpreter interpreter){
+		StringBuffer code = new StringBuffer();
+		String temp = interpreter.nextArgument();
+		ParamParaserResult paramResult = new ParamParaserResult();
+		if(temp.matches(fileUrlPattern)){
+			paramResult.setType(CommandType.FileCode);
+			paramResult.setResult(temp);
+			return paramResult;
+		}else{
+			paramResult.setType(CommandType.ScriptCode);
+		}
+		while( StringUtils.isNotBlank( temp ) ){
+			code.append(temp).append(" ");
+			temp = interpreter.nextArgument();
+		}
+		paramResult.setResult(code.toString());
+		return paramResult;
 	}
 	
 	
