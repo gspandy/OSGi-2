@@ -1,4 +1,4 @@
-package com.zthz.itop.daserver.test.common;
+package org.gunn.gemini.console.test.common;
 
 /**
  * @author Jet Geng

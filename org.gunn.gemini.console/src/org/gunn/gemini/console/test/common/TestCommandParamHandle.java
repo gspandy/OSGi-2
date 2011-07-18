@@ -1,4 +1,4 @@
-package com.zthz.itop.daserver.test.common;
+package org.gunn.gemini.console.test.common;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.osgi.framework.console.CommandInterpreter;
