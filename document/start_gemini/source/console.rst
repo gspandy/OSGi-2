@@ -1,0 +1,30 @@
+Gemini控制台
+============
+概述
+----------
+在 *Blueprint* 起步中我们已经成功的通过 *Blueprint* 容器创建了一个POJO。我们只是通过log的方式查看到我们的POJO已经被创建了。无法深入的去了解容器内部Bean的运行状态和行为。
+所以才有必要创建一个Gemini控制台这样的程序。这个控制台最初的需求是：
+ - 能够动态查看特定的Bean是否被创建。
+ - 能够动态的获取特定的Bean。
+ - 能够检查特定Bean的行为是否正确。
+
+解决方案的选择
+--------------------
+这里的需求一直强调一个动态性。这个很容易的让我想起 Emacs_ 。他通过Lisp脚本机制来实现很多动态性的功能。我想我如果也通过一个脚本来动态操作我们的 *Blueprint* 容器，那样我就可以很容易的实现上述的需求了。这一点在Jdk 1.6以后通过 ScriptEngine_ 很容易实现。
+在众多的脚本语言中，我们选择 Groovy_ 作为我们的脚本语言。
+
+开工
+-------------------
+首先创建一个 Groovy_ 的一个bundle。具体步骤如下：
+ - 通过新建一个 “Plugin-in from Existing Jar Archives”
+   
+    |newjarplugin|
+ - 选择groovy-all-*.jar. 然后接着一路next就可以了。
+
+ 
+
+.. _Emacs: http://www.gnu.org/software/emacs/
+.. _ScriptEngine: http://www.ibm.com/developerworks/cn/java/j-lo-jse6/
+.. _Groovy: http://groovy.codehaus.org/
+.. |newjarplugin| image:: new_plugin.png
+
