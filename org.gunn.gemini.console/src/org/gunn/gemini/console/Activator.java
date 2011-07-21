@@ -10,12 +10,12 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.osgi.framework.console.CommandInterpreter;
 import org.eclipse.osgi.framework.console.CommandProvider;
+import org.gunn.gemini.console.test.common.BeanTestEngine;
+import org.gunn.gemini.console.test.common.ParamParaserResult;
+import org.gunn.gemini.console.test.common.TestCommandParamHandle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import com.zthz.itop.daserver.test.common.BeanTestEngine;
-import com.zthz.itop.daserver.test.common.ParamParaserResult;
-import com.zthz.itop.daserver.test.common.TestCommandParamHandle;
 
 public class Activator extends AbstractBlueprintActivator  implements CommandProvider{
 
@@ -63,7 +63,7 @@ public class Activator extends AbstractBlueprintActivator  implements CommandPro
 	 * @param interpreter
 	 * @return
 	 */
-	public Object _invokeGV( CommandInterpreter interpreter){
+	public Object _invokegv( CommandInterpreter interpreter){
 		ParamParaserResult result = paramHandle.paraseParam(interpreter);
 		
 		switch(result.commandType()){
