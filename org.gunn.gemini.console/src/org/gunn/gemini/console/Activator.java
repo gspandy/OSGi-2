@@ -22,6 +22,7 @@ public class Activator extends AbstractBlueprintActivator  implements CommandPro
 	private BeanTestEngine engine;
 	private Map<String , Object> scriptParam;
 	private TestCommandParamHandle paramHandle;
+	public final static String Main_Method_Name = "main";
 	
 	public Activator(){
 		scriptParam = new HashMap<String, Object>();
@@ -68,14 +69,14 @@ public class Activator extends AbstractBlueprintActivator  implements CommandPro
 		
 		switch(result.commandType()){
 			case ScriptCode :
-					engine.run(getCommandCode(result.getScriptCode()), "adapter", getParam());
+					engine.run(getCommandCode(result.getScriptCode()), Main_Method_Name, getParam());
 				break;
 			case FileCode :
 				URL url;
 				try {
 					url = new URL(result.getScriptFileUrl());
 					File scriptFile = new File(url.toURI());
-					engine.run( scriptFile ,"adapter", getParam() );
+					engine.run( scriptFile ,Main_Method_Name, getParam() );
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -91,7 +92,7 @@ public class Activator extends AbstractBlueprintActivator  implements CommandPro
 	}
 	
 	private String getCommandCode(String arg){
-		StringBuffer strBuff = new StringBuffer(" def adapter(){").append("\n\r");
+		StringBuffer strBuff = new StringBuffer(" def "+Main_Method_Name+"(){").append("\n\r");
 		strBuff.append(arg);
 		strBuff.append("}");
 		return strBuff.toString();
