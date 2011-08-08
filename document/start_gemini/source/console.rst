@@ -27,6 +27,10 @@ Gemini控制台
 
 这个周末(23或24日)完成一个简单的录屏，来演示这个小工具的使用。
 
+问题
+----------
+现在这种方式不能获取到 **OSGi** 中的类。会报出ClassNotFound异常。
+
 .. _Emacs: http://www.gnu.org/software/emacs/
 .. _ScriptEngine: http://www.ibm.com/developerworks/cn/java/j-lo-jse6/
 .. _Groovy: http://groovy.codehaus.org/

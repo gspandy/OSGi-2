@@ -38,7 +38,7 @@
 %            \setlength{\parindent}{2mm}
             \footnotesize #2
           \end{minipage}};
-%        \node[abstracttitle, right=10pt] at (box.north west) {Abstract};
+        \node[abstracttitle, right=10pt] at (box.north west) {提示};
       \end{tikzpicture}
     \end{center}
   }
@@ -90,7 +90,7 @@ Blueprint是OSGi Service Platform Enterprise Specification 标准的一部分。
 \paragraph{个人理解Gemini就是OSGi世界中的IOC。既然是一个IOC框架，那我们就从创建一个Bean开始吧！}
 \subsection{创建一个Bean}
 首先我们来看一下我们要存入Container中的POJO。
-\begin{lstlisting}[keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50} ,language=Java]
+\begin{lstlisting}[keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50} , language=Java, caption={POJOWillInContainer.java}]
 package org.gunn.gemini.demo;
 
 import org.slf4j.Logger;
@@ -121,7 +121,7 @@ public class POJOWillInContainer {
     
 \end{lstlisting}
 这个超级简单的一个POJO，我们如何通过Gemini来创建他呢？我们通过一个简单的配置文件。具体如下。
-\begin{lstlisting}[language=Xml]
+\begin{lstlisting}[language=Xml,caption={pojoconfig.xml}]
 <?xml version="1.0" encoding="UTF-8"?>
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 	<bean id="myPOJO" class="org.gunn.gemini.demo.POJOWillInContainer" >
@@ -131,10 +131,27 @@ public class POJOWillInContainer {
 </blueprint>
     
 \end{lstlisting}
-用过spring的兄弟，第一眼就能看明白这个配置文件说的是什么。他就在
+用过spring的兄弟，第一眼就能看明白这个配置文件说的是什么。其实就是创建了一个bean。
+到这里，我们所需要做的工作其实就已经完成了。下面就可以通过Debug来启动了。
+\subsection{运行Blueprint容器}
+首先把\emph{pojoconfig.xml} 文件放到project\_path/OSGi\_INF/blueprint目录下。或者在MANiFEST.MF文件中通过如下语句进行指定。
+\begin{lstlisting}
+    Blueprint-Bundle: config/account-data-context.xml, config/osgi-*.xml 
+\end{lstlisting}
+更多内容参考\url{http://www.eclipse.org/gemini/blueprint/documentation/reference/1.0.0.RC1/html/app-deploy.html}中的8.2 Blueprint Manifest Configuration Comparison。
+好了，我们可以启动我们的应用程序了。为了能够让blueprint顺利的跑起来，我们必须要把blueprint相关bundle以及他所依赖的bundle都加入到运行时中。
+\begin{figure}[h!]
+  \caption{Debug 配置}
+  \centering
+    \includegraphics[width=1.0\textwidth]{./images/debug_config.png}
+\end{figure}
+按照上图配置后，点击运行。我们将在控制台得到如下内容。\\
+\includegraphics[width=1.5\textwidth]{./images/run_result.png}
+
 \boxabstract{
-这是一个提醒
+   控制台中的黑色行显示我们的POJO已经被BlueprintContainer创建了，并且设定了相关属性。 
 }
+这个部分的全部代码已经放到了git://github.com/jetgeng/OSGi.git中了。感兴趣的筒子可以down下来玩玩。
 \section{常见问题}
 \subsection{打包}
 \subsection{服务相关}

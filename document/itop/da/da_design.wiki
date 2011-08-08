@@ -32,7 +32,9 @@ h5. 数据库的访问
 h5. 设备名字空间的定义
 h4. 连接管理器
 
-负责管理系统中所提供的所有 *Adapter* , 并在适当的时间去创建这些 *Adapter* 。这里采用扩展点的方式来管理各个Adapter。具体的定义如下：
+负责管理系统中所提供的所有 *Adapter* , 并在适当的时间去创建这些 *Adapter* 。这里采用扩展点的方式来管理各个Adapter。
+h5. *Adapter* 扩展点的设计
+具体的定义如下：
 {code:xml}
  <extension-point id="daadapter" name="DAAdapter" schema="schema/daadapter.exsd"/>
 {code}
@@ -98,3 +100,11 @@ h4. 连接管理器
    </element>
 
 {code}
+下图是在可视化环境下的表现形式。
+!adapter_extension_point.png!
+扩展点的adapter代表着一个具体的 *Adapter* ，用protocalName来表示该 *Adapter* 是对何种协议实现。他会对应于我们DA:profile中的type字段。所以要保证两边的映射。
+||协议名称||在DaServer中的名称||扩展点中的protocalName||
+|TcpModeBus| TcpModbusProtocol | TcpModbusProtocol|
+|OPCProtocol| DA:OPCProtocol | DA:OPCProtocol | 
+
+
