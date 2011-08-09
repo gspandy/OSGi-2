@@ -30,7 +30,7 @@ Gemini控制台
 问题
 ----------
 现在这种方式不能获取到 **OSGi** 中的类。会报出ClassNotFound异常。
-
+这个是在主干支里出现的代码。如何处理。
 .. _Emacs: http://www.gnu.org/software/emacs/
 .. _ScriptEngine: http://www.ibm.com/developerworks/cn/java/j-lo-jse6/
 .. _Groovy: http://groovy.codehaus.org/
