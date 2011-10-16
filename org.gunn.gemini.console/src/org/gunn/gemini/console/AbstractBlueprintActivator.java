@@ -31,9 +31,6 @@ public abstract class AbstractBlueprintActivator implements BundleActivator  {
 		}
 	}
 	
-	
-	
-	
 	private BlueprintContainer[] getBlueprintContainer() throws Exception{
 		if( getbluePrintContainerTracker().getService() != null ){
 			
@@ -54,7 +51,7 @@ public abstract class AbstractBlueprintActivator implements BundleActivator  {
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
-		this.instance = this;
+		instance = this;
 		this.context = context;
 		
 		//here i will build a service tracker to access blueprintContainer

@@ -4,7 +4,7 @@ import org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser
 import org.apache.ivy.core.module.descriptor.DependencyDescriptor
 import org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency
 import org.apache.ivy.core.module.id.ModuleRevisionId
-
+//import org.apache.ivy.ant.BuildBundleRepoDescriptorTask
 
 group='org.gemini.console'
 version='1.0.0'
@@ -12,6 +12,13 @@ version='1.0.0'
 apply plugin: 'java'
 
 defaultTasks 'check'
+
+ClassLoader antClassLoader = org.apache.tools.ant.Project.class.classLoader
+eclipseHome = '/Users/gengjet/opt/lib/eclipse 3.7/'
+configurations {
+    antClasspath
+}
+
 
 repositories {
     add(new org.apache.ivy.plugins.resolver.ChainResolver()) {
@@ -38,29 +45,50 @@ repositories {
     }
 }
 
-IvySettings ivySettings = new IvySettings();
-ivySettings.load(new File("ivysettings.xml"));
+
+task initIvyProperties << {
+    File ivyFile = new File('/Users/gengjet/.ant/lib/ivy.jar')
+    antClassLoader.addURL(ivyFile.toURI().toURL())
+    ant{
+        taskdef(resource:'org/apache/ivy/ant/antlib.xml')
+    }    
+}
+
+
+
+//
+//println descriptor
+/*
+moduleDescriptor.getDependencies().each { DependencyDescriptor descriptor ->
+    def mappableConfiguration = descriptor.moduleConfigurations.find { moduleConf ->
+        println moduleConf
+        //rootProjectConfigurations.containsKey(moduleConf)
+    }
+    
+    if (mappableConfiguration) {
+        ModuleRevisionId id = descriptor.dependencyRevisionId
+        
+        println id
+        //rootProjectConfigurations[mappableConfiguration].addDependency(
+        //    new DefaultExternalModuleDependency(id.organisation, id.name, id.revision, descriptor.getDependencyConfigurations(mappableConfiguration)[0])
+        //)
+    }
+}
+*/
 
 dependencies {
    compile group: 'org.junit',           name: 'com.springsource.org.junit',        version: '4.8.1'
-//   compile group: 'ca.odell.glazedlists', name: 'jdk_1.5',      version: '1.8.0'
-//   compile group: 'org.jdom',             name: 'jdom',         version: '1.0'
-//   compile group: 'org.codehaus.xstream', name: 'xstream',      version: '1.2'
-//   compile group: 'org.tmate',            name: 'svnkit',       version: '1.3.0'
-//   compile group: 'w3c',                  name: 'jtidy',        version: '04aug2000r7-dev'
-//   compile group: 'com.ryangrier.ant',    name: 'version_tool', version: '1.1.4_fixed'
-//   compile group: 'com.nurflugel',        name: 'buildtasks',   version: '1.0-SNAPSHOT'
-//   compile group: 'org.apache',           name: 'commons-lang', version: '2.4'
-//   compile group: 'org.apache',           name: 'commons-io',   version: '1.4'
-//   compile group: 'com.intellij',         name: 'forms_rt',     version: '9.0.0'
-//   compile group: 'com.intellij',         name: 'javac2',       version: '9.0.0'
-//   compile group: 'org.jdom',             name: 'jdom',         version: '1.0'
-//   compile group: 'org.testng',           name: 'testng',       version: '5.8-jdk1.5'
-//   compile group: 'org.testng',           name: 'testng',       version: '5.8-jdk1.5'
-//   compile group: 'org.objectweb.asm',    name: 'asm',          version: '3.1'
 }
 
-task myCheck << {
-    String greeting = "hello from ant"
-    ant.echo(message:greeting)
+task myCheck( dependsOn:'initIvyProperties') << {
+    //ant.buildobr(out:'repo/eclipse_repo.xml' , baseDir : eclipseHome , basePath:eclipseHome , indent : true)
+    //ant.resolve()
+    
+    IvySettings ivySettings = new IvySettings();
+    ivySettings.load(new File("ivysettings.xml"));
+    
+    //这个就是传说中的顿悟吗？
+    DefaultModuleDescriptor moduleDescriptor = (DefaultModuleDescriptor) XmlModuleDescriptorParser
+                                                .getInstance()
+                                                .parseDescriptor(ivySettings, new File("META-INF/MANIFEST.MF").toURL(), false);
 }

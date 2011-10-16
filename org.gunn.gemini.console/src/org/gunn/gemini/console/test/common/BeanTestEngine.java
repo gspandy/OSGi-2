@@ -13,6 +13,9 @@ import javax.script.Invocable;
 import javax.script.ScriptException;
 import org.apache.commons.lang.StringUtils; 
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
+import org.gunn.gemini.console.Activator;
+import org.gunn.gemini.console.classloader.GunnScriptClassLoader;
+import org.osgi.framework.Bundle;
 
 public class BeanTestEngine {
 	
@@ -20,6 +23,9 @@ public class BeanTestEngine {
 
 	public void init(){
 		engine = new GroovyScriptEngineImpl();
+		Bundle[] bundles = Activator.getDefault().getContext().getBundles();
+		GunnScriptClassLoader classLoader = new GunnScriptClassLoader(bundles);
+		((GroovyScriptEngineImpl)engine).setClassLoader(classLoader);
 	}
 	
 	public Object run(String code , String functionName , Map<String,Object> para){
