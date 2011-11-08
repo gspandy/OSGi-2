@@ -32,12 +32,11 @@ public class GunnScriptClassLoader extends GroovyClassLoader {
      */
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
-        return askBundles(convertToJavaName(name));
+        return askBundles(name);
     }
     
     private Class<?> askBundles (final String name) throws ClassNotFoundException{
         synchronized(cachedClasses) {
-            System.out.println(name);
             if( cachedClasses.containsKey(name)) {
                 return cachedClasses.get(name);
             }
@@ -60,14 +59,8 @@ public class GunnScriptClassLoader extends GroovyClassLoader {
     protected Class< ? > findClass( final String name )
     throws ClassNotFoundException
     {
-        return askBundles( convertToJavaName(name ));
+        return askBundles( name );
     }
     
-    private String convertToJavaName(String name) {
-        String javaName = name.replaceAll("\\$", ".");
-        //去掉前面的java.lang
-        javaName = javaName.substring(10);
-        return name;
-    }
 
 }

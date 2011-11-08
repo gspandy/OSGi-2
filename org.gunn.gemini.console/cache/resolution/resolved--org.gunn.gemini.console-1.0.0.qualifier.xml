@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:o="http://ant.apache.org/ivy/osgi">
+	<info organisation=""
+		module="org.gunn.gemini.console"
+		revision="1.0.0.qualifier"
+		status="integration"
+		publication="20110827181032"
+		o:type="bundle"
+	/>
+	<configurations>
+		<conf name="default" visibility="public"/>
+		<conf name="optional" visibility="public" description="Optional dependencies" extends="default"/>
+		<conf name="transitive-optional" visibility="public" description="Optional dependencies" extends="optional"/>
+		<conf name="use_org.eclipse.osgi.framework.console" visibility="public" description="Exported package org.eclipse.osgi.framework.console" extends="default"/>
+		<conf name="use_org.eclipse.osgi.util" visibility="public" description="Exported package org.eclipse.osgi.util" extends="default"/>
+		<conf name="use_org.osgi.framework" visibility="public" description="Exported package org.osgi.framework" extends="default"/>
+		<conf name="use_org.osgi.service.blueprint.container" visibility="public" description="Exported package org.osgi.service.blueprint.container" extends="default"/>
+		<conf name="use_org.osgi.util.tracker" visibility="public" description="Exported package org.osgi.util.tracker" extends="default"/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="" name="org.eclipse.osgi.services" rev="[3.2.100,)" conf="default->default" o:type="bundle"/>
+		<dependency org="" name="org.eclipse.osgi.framework.console" rev="[1.1.0,)" conf="use_org.eclipse.osgi.framework.console->use_org.eclipse.osgi.framework.console;default->use_org.eclipse.osgi.framework.console" o:type="package"/>
+		<dependency org="" name="org.eclipse.osgi.util" rev="[1.1.0,)" conf="use_org.eclipse.osgi.util->use_org.eclipse.osgi.util;default->use_org.eclipse.osgi.util" o:type="package"/>
+		<dependency org="" name="org.osgi.framework" rev="[1.3.0,)" conf="use_org.osgi.framework->use_org.osgi.framework;default->use_org.osgi.framework" o:type="package"/>
+		<dependency org="" name="org.osgi.service.blueprint.container" rev="[1.0.0,)" conf="use_org.osgi.service.blueprint.container->use_org.osgi.service.blueprint.container;default->use_org.osgi.service.blueprint.container" o:type="package"/>
+		<dependency org="" name="org.osgi.util.tracker" rev="[1.4.2,)" conf="use_org.osgi.util.tracker->use_org.osgi.util.tracker;default->use_org.osgi.util.tracker" o:type="package"/>
+	</dependencies>
+</ivy-module>
